@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "SITINMONITORINGSYSTEM/App.py",
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": [
+          "SITINMONITORINGSYSTEM/templates/**",
+          "SITINMONITORINGSYSTEM/static/**",
+          "SITINMONITORINGSYSTEM/database.db"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "SITINMONITORINGSYSTEM/App.py"
+    }
+  ]
+}
