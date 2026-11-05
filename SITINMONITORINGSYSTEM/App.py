@@ -8,7 +8,7 @@ import io
 import csv
 
 app = Flask(__name__)
-app.secret_key = 'secretkey123'
+app.secret_key = os.environ.get('SECRET_KEY', 'secretkey123')
 
 FOUL_WORDS = {
     # ── ENGLISH ──
@@ -166,12 +166,22 @@ def contains_foul_language(text):
     return False
 
 # ── CONFIG ──
-ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD = 'admin123'
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
 # ── DATABASE PATH ──
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH  = os.path.join(BASE_DIR, 'database.db')
+BUNDLED_DB = os.path.join(BASE_DIR, 'database.db')
+
+# On Vercel the project folder is read-only, so work on a copy in /tmp.
+# Note: data in /tmp resets when Vercel restarts the function (demo mode).
+if os.environ.get('VERCEL'):
+    DB_PATH = '/tmp/database.db'
+    if not os.path.exists(DB_PATH) and os.path.exists(BUNDLED_DB):
+        import shutil
+        shutil.copyfile(BUNDLED_DB, DB_PATH)
+else:
+    DB_PATH = BUNDLED_DB
 
 print("DB PATH:", DB_PATH)
 
