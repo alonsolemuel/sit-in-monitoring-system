@@ -38,7 +38,7 @@ Students can reserve a lab PC, check which PCs are available, view their sit-in 
 **Requirements:** Python 3.10+
 
 ```bash
-git clone https://github.com/Aya12234567/sit-in-monitoring-system.git
+git clone https://github.com/alonsolemuel/sit-in-monitoring-system.git
 cd sit-in-monitoring-system/SITINMONITORINGSYSTEM
 pip install -r requirements.txt
 python App.py
